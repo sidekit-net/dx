@@ -10,7 +10,10 @@
   "scripts": {
     "dev": "bun run src/index.tsx",
     "build": "bun build --compile src/index.tsx --outfile dist/dx",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "bash tests/run-all-tests.sh",
+    "test:deps": "bash tests/test-deps.sh",
+    "test:sdk": "bash tests/test-sdk.sh"
   },
   "dependencies": {
     "ink": "^6.6.0",

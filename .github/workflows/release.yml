@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+            artifact: dx-linux-x64
+          - os: ubuntu-latest
+            target: linux-arm64
+            artifact: dx-linux-arm64
+          - os: macos-latest
+            target: darwin-x64
+            artifact: dx-darwin-x64
+          - os: macos-latest
+            target: darwin-arm64
+            artifact: dx-darwin-arm64
+          - os: windows-latest
+            target: windows-x64
+            artifact: dx-windows-x64.exe
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build binary
+        run: bun build --compile src/index.tsx --target=bun-${{ matrix.target }} --outfile dist/${{ matrix.artifact }}
+
+      - name: Generate checksums (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          cd dist
+          shasum -a 256 ${{ matrix.artifact }} > ${{ matrix.artifact }}.sha256
+
+      - name: Generate checksums (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          cd dist
+          Get-FileHash ${{ matrix.artifact }} -Algorithm SHA256 | Select-Object -ExpandProperty Hash | Out-File -FilePath ${{ matrix.artifact }}.sha256 -NoNewline
+        shell: pwsh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            dist/${{ matrix.artifact }}
+            dist/${{ matrix.artifact }}.sha256
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release
+          find artifacts -type f -exec cp {} release/ \;
+          ls -la release/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
