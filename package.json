@@ -1,0 +1,24 @@
+{
+  "name": "dx",
+  "version": "1.0.0",
+  "description": "dotnet extras - CLI tools for .NET development",
+  "type": "module",
+  "main": "src/index.tsx",
+  "bin": {
+    "dx": "./src/index.tsx"
+  },
+  "scripts": {
+    "dev": "bun run src/index.tsx",
+    "build": "bun build --compile src/index.tsx --outfile dist/dx",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ink": "^6.6.0",
+    "react": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.13",
+    "typescript": "^5.9.3"
+  }
+}
