@@ -1,6 +1,11 @@
 # dx - dotnet extras
 
-A unified CLI tool for .NET development, combining SDK version management and NuGet package management.
+A dotnet utility and developer experience toolkit.
+
+**Current features**
+
+- `dx sdk` Manage your .net sdk versions
+- `dx deps` manage your project's dependencies (nuget and project references) with a beautiful terminal UI
 
 ## Features
 
@@ -30,6 +35,7 @@ curl -fsSL https://raw.githubusercontent.com/alveflo/dx/main/install.sh | bash
 ```
 
 After installation, restart your terminal or run:
+
 ```bash
 source ~/.bashrc  # or ~/.zshrc for zsh users
 ```
@@ -84,25 +90,30 @@ dx deps ./MySolution.sln
 #### TUI Navigation
 
 **Main Screen:**
+
 - `Tab` - Switch between Search, Installed, References tabs
 - `↑↓` - Navigate lists
 - `Enter` - Select package or action
 - `Ctrl+C` - Exit
 
 **Search Tab:**
+
 - `Ctrl+P` - Toggle prerelease packages
 - Type to search packages
 
 **Installed Tab:**
+
 - `u` - Update selected package
 - `d` - Delete selected package
 - `r` - Refresh package list
 
 **References Tab:**
+
 - `a` - Add project reference
 - `d` - Remove project reference
 
 **Solution Mode:**
+
 - Choose between NuGet batch install or project reference management
 - Select target projects for batch operations
 
@@ -111,6 +122,7 @@ dx deps ./MySolution.sln
 ### SDK Management
 
 The SDK manager uses the following directory structure:
+
 ```
 ~/.dvm/
 ├── versions/           # Installed SDK versions
@@ -122,12 +134,14 @@ The SDK manager uses the following directory structure:
 ```
 
 Environment variables:
+
 - `DVM_DIR` - Override default directory (default: `~/.dvm`)
 - `DOTNET_ROOT` - Automatically set to current SDK (default: `$DVM_DIR/current`)
 
 ### PATH Configuration
 
 The installer automatically adds to your shell profile:
+
 ```bash
 export DVM_DIR="$HOME/.dvm"
 export DOTNET_ROOT="$DVM_DIR/current"
@@ -137,6 +151,7 @@ export PATH="$HOME/.local/bin:$DVM_DIR/current:$PATH"
 ## Building from Source
 
 Requirements:
+
 - [Bun](https://bun.sh) runtime
 
 ```bash
@@ -160,11 +175,13 @@ curl -fsSL https://raw.githubusercontent.com/alveflo/dx/main/uninstall.sh | bash
 ```
 
 Or run the uninstall script if you have the repository:
+
 ```bash
 ./uninstall.sh
 ```
 
 This will:
+
 - Remove the `dx` binary
 - Optionally remove all installed .NET SDKs
 - Clean up shell configuration
@@ -177,6 +194,7 @@ This will:
 - **nuget-tui** - NuGet Package Manager (originally standalone)
 
 The codebase structure:
+
 ```
 src/
 ├── index.tsx           # Top-level command router
@@ -194,6 +212,7 @@ src/
 ```
 
 Built with:
+
 - **Bun** - Fast JavaScript runtime and bundler
 - **TypeScript** - Type-safe development
 - **Ink** - React for terminal UIs
@@ -210,5 +229,6 @@ Contributions welcome! Please feel free to submit issues or pull requests.
 ## Credits
 
 This project merges functionality from:
+
 - [dvm](https://github.com/alveflo/dvm) - .NET Version Manager
 - [nuget-tui](https://github.com/alveflo/nuget-tui) - NuGet TUI
