@@ -31,7 +31,7 @@ Terminal UI for managing NuGet packages and project references:
 ## Installation
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/alveflo/dx/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/sidekit-net/dx/main/install.sh | bash
 ```
 
 After installation, restart your terminal or run:
@@ -171,7 +171,7 @@ bun run build
 ## Uninstalling
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/alveflo/dx/main/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/sidekit-net/dx/main/uninstall.sh | bash
 ```
 
 Or run the uninstall script if you have the repository:
@@ -185,31 +185,6 @@ This will:
 - Remove the `dx` binary
 - Optionally remove all installed .NET SDKs
 - Clean up shell configuration
-
-## Architecture
-
-`dx` is a merged CLI combining two tools:
-
-- **dvm** - .NET Version Manager (originally standalone)
-- **nuget-tui** - NuGet Package Manager (originally standalone)
-
-The codebase structure:
-
-```
-src/
-├── index.tsx           # Top-level command router
-├── sdk/                # SDK management (from dvm)
-│   ├── commands/       # Install, use, uninstall commands
-│   ├── components/     # Spinner, SelectInput UI components
-│   └── utils/          # Core SDK management logic
-└── deps/               # NuGet package manager (from nuget-tui)
-    ├── screens/        # TUI screens
-    ├── components/     # UI components
-    ├── hooks/          # React hooks
-    ├── services/       # dotnet CLI wrappers
-    ├── api/            # NuGet API client
-    └── store/          # State management
-```
 
 Built with:
 
@@ -225,10 +200,3 @@ MIT
 ## Contributing
 
 Contributions welcome! Please feel free to submit issues or pull requests.
-
-## Credits
-
-This project merges functionality from:
-
-- [dvm](https://github.com/alveflo/dvm) - .NET Version Manager
-- [nuget-tui](https://github.com/alveflo/nuget-tui) - NuGet TUI

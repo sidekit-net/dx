@@ -3,10 +3,10 @@ set -euo pipefail
 
 # -------------------------------------------------------------------
 # dx (dotnet extras) installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/alveflo/dx/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/sidekit-net/dx/main/install.sh | bash
 # -------------------------------------------------------------------
 
-REPO="alveflo/dx"
+REPO="sidekit-net/dx"
 INSTALL_DIR="${DX_INSTALL_DIR:-$HOME/.local/bin}"
 BINARY_NAME="dx"
 DVM_DIR="${DVM_DIR:-$HOME/.dvm}"
