@@ -128,7 +128,6 @@ main() {
   # Create install directory
   mkdir -p "$INSTALL_DIR"
 
-  local tmp
   tmp="$(mktemp)"
   trap 'rm -f "$tmp"' EXIT
 
